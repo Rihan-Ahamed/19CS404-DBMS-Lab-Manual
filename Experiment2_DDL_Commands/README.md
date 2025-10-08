@@ -105,9 +105,6 @@ CREATE TABLE Table_Name (
 
 **Question 1**
 --
--- Paste Question 1 here
-
-```sql
 Write an SQL query to add two new columns, department_id and manager_id, to the table employee with datatype of INTEGER. The manager_id column should have a default value of NULL.
 
  
@@ -128,19 +125,20 @@ cid         name        type        notnull     dflt_value  pk
 1           salary      number      0                       0
 2           department  INTEGER     0                       0
 3           manager_id  INTEGER     0           NULL        0
+
+```sql
+alter table employee add column department_id INTEGER;
+alter table employee add column manager_id INTEGER default NULL;
 ```
 
 **Output:**
 
-<img width="925" height="205" alt="image" src="https://github.com/user-attachments/assets/956d21e7-841a-4683-a48e-7d755ce1aebd" />
+<img width="1220" height="333" alt="image" src="https://github.com/user-attachments/assets/b607764f-747d-4f88-9802-c124c2bcc1d3" />
 
 
 
 **Question 2**
 ---
--- Paste Question 2 here
-
-```sql
 Insert a student with RollNo 201, Name David Lee, Gender M, Subject Physics, and MARKS 92 into the Student_details table.
 
 For example:
@@ -151,18 +149,19 @@ RollNo      Name        Gender      Subject     MARKS
 ----------  ----------  ----------  ----------  ----------
 201         David Lee   M           Physics     92
 
+```sql
+insert into Student_details values (201,"David Lee","M","Physics",92);
+
 ```
 
 **Output:**
 
-<img width="883" height="77" alt="image" src="https://github.com/user-attachments/assets/fe587c6d-4514-47fa-bdb9-c6f4558c82d2" />
+<img width="1298" height="228" alt="image" src="https://github.com/user-attachments/assets/c3a2d665-089e-4640-83df-6e7a0d92f5f4" />
+
 
 
 **Question 3**
 ---
--- Paste Question 3 here
-
-```sql
 Insert all products from Discontinued_products into Products.
 
 Table attributes are ProductID, ProductName, Price, Stock
@@ -178,18 +177,21 @@ ProductID   ProductName     Price       Stock
 103         Classic Tablet  149.99      5
                       0                       0
 
+```sql
+insert into Products (ProductID,ProductName,Price,Stock)
+select ProductID,ProductName,Price,Stock
+from Discontinued_products
+
 ```
 
 **Output:**
-<img width="754" height="104" alt="image" src="https://github.com/user-attachments/assets/c21fb1e3-5484-4fb4-99be-e7ad1d7aca29" />
+<img width="1184" height="278" alt="image" src="https://github.com/user-attachments/assets/0ff06a8a-f087-47f0-8339-d17e393319be" />
+
 
 
 
 **Question 4**
 ---
--- Paste Question 4 here
-
-```sql
 Create a table named Invoices with the following constraints:
 
 InvoiceID as INTEGER should be the primary key.
@@ -203,19 +205,25 @@ INSERT INTO Invoices (InvoiceID, InvoiceDate)
 VALUES (1, '2024-08-08'),(1,'2024-09-08');
 Error: UNIQUE constraint failed: Invoices.InvoiceID
 
+
+```sql
+create table Invoices (
+InvoiceID INTEGER primary key,
+InvoiceDate DATE,
+DueDate Date check(DueDate>InvoiceDate),
+Amount REAL check(Amount>0)
+);
 ```
 
 **Output:**
 
-<img width="514" height="203" alt="image" src="https://github.com/user-attachments/assets/e5902a85-18e9-4f28-80d8-dd45094b1b1d" />
+<img width="1199" height="240" alt="image" src="https://github.com/user-attachments/assets/8fee4250-82bd-42f2-9ef7-4f2febc09f5b" />
+
 
 
 
 **Question 5**
 ---
--- Paste Question 5 here
-
-```sql
 Create a table named Shipments with the following constraints:
 ShipmentID as INTEGER should be the primary key.
 ShipmentDate as DATE.
@@ -227,19 +235,27 @@ Test	Result
 INSERT INTO Shipments (ShipmentID, ShipmentDate, SupplierID, OrderID) VALUES (2, '2024-08-03', 99, 1);
 Error: FOREIGN KEY constraint failed
 
+```sql
+
+create table Shipments(
+ShipmentID INTEGER primary key,
+ShipmentDate DATE,
+SupplierID INTEGER,
+OrderID INTEGER,
+foreign key (SupplierID) references Suppliers(SupplierID),
+foreign key (OrderID) references Orders(OrderID)
+);
 
 ```
 
 **Output:**
 
-<img width="611" height="238" alt="image" src="https://github.com/user-attachments/assets/243939bd-92b5-4683-9f0f-36623cdf01d8" />
+<img width="1220" height="248" alt="image" src="https://github.com/user-attachments/assets/b0f9b73e-da8a-4ea1-8a17-34504cc20848" />
+
 
 
 **Question 6**
 ---
--- Paste Question 6 here
-
-```sql
 Create a new table named item with the following specifications and constraints:
 item_id as TEXT and as primary key.
 item_desc as TEXT.
@@ -259,19 +275,27 @@ item_id     item_desc     rate        icom_id
 ITM5        Charlie Gold  700
 
 
+
+```sql
+create table item (
+item_id text primary key,
+item_desc text not null,
+rate integer not null,
+icom_id text(4),
+foreign key (icom_id) references company(com_id)
+on update set null
+on delete set null
+);
 ```
 
 **Output:**
 
-<img width="546" height="289" alt="image" src="https://github.com/user-attachments/assets/7e078063-cdbd-4bd3-bab5-95273d6349ca" />
+<img width="1240" height="348" alt="image" src="https://github.com/user-attachments/assets/4398bef7-d752-4a33-bb74-033061dfe3f0" />
 
 
 
 **Question 7**
 ---
--- Paste Question 7 here
-
-```sql
 Create a table named Attendance with the following constraints:
 AttendanceID as INTEGER should be the primary key.
 EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID).
@@ -286,19 +310,25 @@ AttendanceID  EmployeeID  AttendanceDate  Status
 ------------  ----------  --------------  ----------
 1             1           2024-08-01      Present
 
+
+```sql
+create table Attendance (
+AttendanceID integer primary key,
+EmployeeID integer,
+AttendanceDate DATE,
+Status text check(Status in("Present","Absent","Leave")),
+foreign key (EmployeeID) references Employees(EmployeeID));
 ```
 
 **Output:**
 
-<img width="663" height="215" alt="image" src="https://github.com/user-attachments/assets/67a618db-0b6b-4f8d-bd56-321c7af978f6" />
+<img width="1203" height="276" alt="image" src="https://github.com/user-attachments/assets/cbb3bf6f-86da-4bc0-8b3f-415fe3dccc2a" />
+
 
 
 
 **Question 8**
 ---
--- Paste Question 8 here
-
-```sql
 Create a table named Locations with the following columns:
 
 LocationID as INTEGER
@@ -314,19 +344,23 @@ cid       name             type        notnull     dflt_value  pk
 1         LocationName     TEXT        0                       0
 2         Address          TEXT        0                       0
 
+```sql
+create table Locations (
+LocationID INTEGER,
+LocationName TEXT,
+Address TEXT);
+
 ```
 
 **Output:**
 
-<img width="317" height="111" alt="image" src="https://github.com/user-attachments/assets/61ce7212-22c2-4ae4-90a6-00aa61f6d7ad" />
+<img width="1327" height="397" alt="image" src="https://github.com/user-attachments/assets/16394144-dc5e-472e-b7d3-edd957c1b7dc" />
+
 
 
 
 **Question 9**
 ---
--- Paste Question 9 here
-
-```sql
 Write an SQL query to add two new columns, designation and net_salary, to the table Companies. The designation column should have a data type of varchar(50), and the net_salary column should have a data type of number.
 
  
@@ -346,19 +380,21 @@ cid         name        type        notnull     dflt_value  pk
 4           phone       varchar(10  0                       0
 5           designatio  varchar(50  0                       0
 6           net_salary  number      0                       0
+
+```sql
+alter table Companies add column designation varchar(50);
+alter table Companies add column net_salary number;
 ```
 
 **Output:**
 
-<img width="1108" height="182" alt="image" src="https://github.com/user-attachments/assets/8dba1f39-b913-447a-9cb5-a8f85862ee31" />
+<img width="1242" height="404" alt="image" src="https://github.com/user-attachments/assets/6828c7ad-5869-4659-9405-da487f1baac6" />
+
 
 
 
 **Question 10**
 ---
--- Paste Question 10 here
-
-```sql
 In the Products table, insert a record where some fields are NULL, another record where all fields are filled without any NULL values, and a third record where some fields are filled, and others are left as NULL.
 
 ProductID   Name              Category    Price       Stock
@@ -378,11 +414,17 @@ ProductID   Name             Category    Price       Stock
 107         Laptop           Electronic  999.99      50
 108         Wireless Earbud  Accessorie              100
 
+
+```sql
+insert into Products values (106,"Fitness Tracker","Wearables", null,null );
+insert into Products values (107."Laptop","Electronics",999.99,50);
+insert into Products values (108,"Wireless Earbud","Accessorie",null,100);
 ```
 
 **Output:**
 
-<img width="860" height="145" alt="image" src="https://github.com/user-attachments/assets/72d715e0-7724-4511-8657-e051ec1ca384" />
+
+<img width="1217" height="238" alt="image" src="https://github.com/user-attachments/assets/729c07a2-9c68-47ba-a386-97bb0542460f" />
 
 
 

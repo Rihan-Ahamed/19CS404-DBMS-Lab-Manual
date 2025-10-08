@@ -108,27 +108,32 @@ CREATE TABLE Table_Name (
 -- Paste Question 1 here
 
 ```sql
-Create a table named Products with the following columns:
+Write an SQL query to add two new columns, department_id and manager_id, to the table employee with datatype of INTEGER. The manager_id column should have a default value of NULL.
 
-ProductID as INTEGER
-ProductName as TEXT
-Price as REAL
-Stock as INTEGER
+ 
+
+ 
+
+ 
+
+ 
+
 For example:
 
 Test	Result
-pragma table_info('Products');
-cid   name        type        notnull     dflt_value  pk
-----  ----------  ----------  ----------  ----------  ----------
-0     ProductID   INTEGER     0                       0
-1     ProductNam  TEXT        0                       0
-2     Price       REAL        0                       0
-3     Stock       INTEGER     0                       0
+PRAGMA table_info(employee);
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          integer     0                       0
+1           salary      number      0                       0
+2           department  INTEGER     0                       0
+3           manager_id  INTEGER     0           NULL        0
 ```
 
 **Output:**
 
-<img width="654" height="214" alt="image" src="https://github.com/user-attachments/assets/0c950e36-db23-473f-af35-93864324a29a" />
+<img width="925" height="205" alt="image" src="https://github.com/user-attachments/assets/956d21e7-841a-4683-a48e-7d755ce1aebd" />
+
 
 
 **Question 2**
@@ -136,27 +141,21 @@ cid   name        type        notnull     dflt_value  pk
 -- Paste Question 2 here
 
 ```sql
-Write an SQL query to add a new column email of type TEXT to the Student_details table, and ensure that this column cannot contain NULL values and make default value as 'Invalid'
-
- 
-
- 
+Insert a student with RollNo 201, Name David Lee, Gender M, Subject Physics, and MARKS 92 into the Student_details table.
 
 For example:
 
 Test	Result
-INSERT INTO Student_details (RollNo, Name, Gender, Subject, email) 
-VALUES (1, 'John Doe', 'M', 'Math', 'john@example.com');
-select * from Student_details;
-RollN  Name   Gen  Subject     email
------  -----  ---  ----------  ----------------
-1      John   M    Math        john@example.com
+SELECT * FROM Student_details WHERE RollNo = 201;
+RollNo      Name        Gender      Subject     MARKS
+----------  ----------  ----------  ----------  ----------
+201         David Lee   M           Physics     92
 
 ```
 
 **Output:**
 
-<img width="874" height="316" alt="image" src="https://github.com/user-attachments/assets/3c60592b-03be-4795-a8b0-f71246d7ce31" />
+<img width="883" height="77" alt="image" src="https://github.com/user-attachments/assets/fe587c6d-4514-47fa-bdb9-c6f4558c82d2" />
 
 
 **Question 3**
@@ -164,35 +163,26 @@ RollN  Name   Gen  Subject     email
 -- Paste Question 3 here
 
 ```sql
-Write a SQL query for adding a new column named "email" with the datatype VARCHAR(100) to the  table "customer" 
+Insert all products from Discontinued_products into Products.
 
-Sample table: customer
-
- customer_id |   cust_name    |    city    | grade | salesman_id 
--------------+----------------+------------+-------+-------------
-        3002 | Nick Rimando   | New York   |   100 |        5001
-        3007 | Brad Davis     | New York   |   200 |        5001
-        3005 | Graham Zusi    | California |   200 |        5002
- 
+Table attributes are ProductID, ProductName, Price, Stock
 
 For example:
 
 Test	Result
-pragma table_info('customer');
-cid         name         type                               notnull     dflt_value  pk
-----------  -----------  ---------------------------------  ----------  ----------  ----------
-0           customer_id  integer primarykey auto increment  0                       0
-1           cust_name    varchar2(30)                       0                       0
-2           city         varchar(30)                        0                       0
-3           grade        number                             0                       0
-4           salesman_id  number                             0                       0
-5           email        VARCHAR(100)                       0                       0
+select * from Products;
+ProductID   ProductName     Price       Stock
+----------  --------------  ----------  ----------
+101         Old Smartphone  199.99      0
+102         Vintage Laptop  399.99      10
+103         Classic Tablet  149.99      5
+                      0                       0
 
 ```
 
 **Output:**
+<img width="754" height="104" alt="image" src="https://github.com/user-attachments/assets/c21fb1e3-5484-4fb4-99be-e7ad1d7aca29" />
 
-<img width="730" height="230" alt="image" src="https://github.com/user-attachments/assets/cc308204-230c-456c-90e9-d8dc0a31dfe3" />
 
 
 **Question 4**
@@ -200,25 +190,86 @@ cid         name         type                               notnull     dflt_val
 -- Paste Question 4 here
 
 ```sql
-Insert a new product with ProductID 101, Name Laptop, Category Electronics, Price 1500, and Stock 50 into the Products table.
+Create a table named Invoices with the following constraints:
 
+InvoiceID as INTEGER should be the primary key.
+InvoiceDate as DATE.
+DueDate as DATE should be greater than the InvoiceDate.
+Amount as REAL should be greater than 0.
 For example:
 
 Test	Result
-SELECT * FROM Products WHERE ProductID = 101;
-ProductID   Name        Category     Price       Stock
-----------  ----------  -----------  ----------  ----------
-101         Laptop      Electronics  1500        50
+INSERT INTO Invoices (InvoiceID, InvoiceDate)
+VALUES (1, '2024-08-08'),(1,'2024-09-08');
+Error: UNIQUE constraint failed: Invoices.InvoiceID
+
 ```
 
 **Output:**
 
-<img width="794" height="150" alt="image" src="https://github.com/user-attachments/assets/c336aa56-4dc2-4fff-b153-d47544c668d1" />
+<img width="514" height="203" alt="image" src="https://github.com/user-attachments/assets/e5902a85-18e9-4f28-80d8-dd45094b1b1d" />
+
 
 
 **Question 5**
 ---
 -- Paste Question 5 here
+
+```sql
+Create a table named Shipments with the following constraints:
+ShipmentID as INTEGER should be the primary key.
+ShipmentDate as DATE.
+SupplierID as INTEGER should be a foreign key referencing Suppliers(SupplierID).
+OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
+For example:
+
+Test	Result
+INSERT INTO Shipments (ShipmentID, ShipmentDate, SupplierID, OrderID) VALUES (2, '2024-08-03', 99, 1);
+Error: FOREIGN KEY constraint failed
+
+
+```
+
+**Output:**
+
+<img width="611" height="238" alt="image" src="https://github.com/user-attachments/assets/243939bd-92b5-4683-9f0f-36623cdf01d8" />
+
+
+**Question 6**
+---
+-- Paste Question 6 here
+
+```sql
+Create a new table named item with the following specifications and constraints:
+item_id as TEXT and as primary key.
+item_desc as TEXT.
+rate as INTEGER.
+icom_id as TEXT with a length of 4.
+icom_id is a foreign key referencing com_id in the company table.
+The foreign key should set NULL on updates and deletes.
+item_desc and rate should not accept NULL.
+For example:
+
+Test	Result
+INSERT INTO item VALUES("ITM5","Charlie Gold",700,"COM4");
+UPDATE company SET com_id='COM5' WHERE com_id='COM4';
+SELECT * FROM item;
+item_id     item_desc     rate        icom_id
+----------  ------------  ----------  ----------
+ITM5        Charlie Gold  700
+
+
+```
+
+**Output:**
+
+<img width="546" height="289" alt="image" src="https://github.com/user-attachments/assets/7e078063-cdbd-4bd3-bab5-95273d6349ca" />
+
+
+
+**Question 7**
+---
+-- Paste Question 7 here
 
 ```sql
 Create a table named Attendance with the following constraints:
@@ -239,56 +290,8 @@ AttendanceID  EmployeeID  AttendanceDate  Status
 
 **Output:**
 
-<img width="753" height="279" alt="image" src="https://github.com/user-attachments/assets/6bb5c7c3-1940-4a61-9465-12cd75e741c6" />
+<img width="663" height="215" alt="image" src="https://github.com/user-attachments/assets/67a618db-0b6b-4f8d-bd56-321c7af978f6" />
 
-
-**Question 6**
----
--- Paste Question 6 here
-
-```sql
-Create a table named ProjectAssignments with the following constraints:
-AssignmentID as INTEGER should be the primary key.
-EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID).
-ProjectID as INTEGER should be a foreign key referencing Projects(ProjectID).
-AssignmentDate as DATE should be NOT NULL.
-For example:
-
-Test	Result
-INSERT INTO ProjectAssignments (AssignmentID, EmployeeID, ProjectID, AssignmentDate) VALUES (2, 99, 1, '2024-01-03');
-Error: FOREIGN KEY constraint failed
-
-```
-
-**Output:**
-
-<img width="667" height="204" alt="image" src="https://github.com/user-attachments/assets/e0f1078e-80c5-4e17-98a0-daad46d60dbe" />
-
-
-**Question 7**
----
--- Paste Question 7 here
-
-```sql
-Insert all customers from Old_customers into Customers
-
-Table attributes are CustomerID, Name, Address, Email
-
-For example:
-
-Test	Result
-select * from Customers;
-CustomerID  Name             Address         Email
-----------  ---------------  --------------  ---------------------
-301         Michael Johnson  123 Elm Street  michael.j@example.com
-302         Sarah Lee        456 Oak Avenue  sarah.lee@example.com
-303         David Wilson     789 Pine Road   david.w@example.com
-
-```
-
-**Output:**
-
-<img width="732" height="144" alt="image" src="https://github.com/user-attachments/assets/075d3661-9e2e-4b6c-8070-ab29997c53d1" />
 
 
 **Question 8**
@@ -296,26 +299,27 @@ CustomerID  Name             Address         Email
 -- Paste Question 8 here
 
 ```sql
-Create a table named Bonuses with the following constraints:
-BonusID as INTEGER should be the primary key.
-EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID).
-BonusAmount as REAL should be greater than 0.
-BonusDate as DATE.
-Reason as TEXT should not be NULL.
+Create a table named Locations with the following columns:
+
+LocationID as INTEGER
+LocationName as TEXT
+Address as TEXT
 For example:
 
 Test	Result
-INSERT INTO Bonuses (BonusID, EmployeeID, BonusAmount, BonusDate, Reason) VALUES (1, 6, 1000.0, '2024-08-01', 'Outstanding performance');
-SELECT * FROM Bonuses;
-BonusID     EmployeeID  BonusAmount  BonusDate   Reason
-----------  ----------  -----------  ----------  -----------------------
-1           6           1000.0       2024-08-01  Outstanding performance
+pragma table_info('Locations');
+cid       name             type        notnull     dflt_value  pk
+--------  ---------------  ----------  ----------  ----------  ----------
+0         LocationID       INTEGER     0                       0
+1         LocationName     TEXT        0                       0
+2         Address          TEXT        0                       0
 
 ```
 
 **Output:**
 
-<img width="694" height="264" alt="image" src="https://github.com/user-attachments/assets/b6101094-28a8-4623-89fa-fa3c57fe1da6" />
+<img width="317" height="111" alt="image" src="https://github.com/user-attachments/assets/61ce7212-22c2-4ae4-90a6-00aa61f6d7ad" />
+
 
 
 **Question 9**
@@ -323,28 +327,31 @@ BonusID     EmployeeID  BonusAmount  BonusDate   Reason
 -- Paste Question 9 here
 
 ```sql
-Create a new table named item with the following specifications and constraints:
-item_id as TEXT and as primary key.
-item_desc as TEXT.
-rate as INTEGER.
-icom_id as TEXT with a length of 4.
-icom_id is a foreign key referencing com_id in the company table.
-The foreign key should set NULL on updates and deletes.
-item_desc and rate should not accept NULL.
+Write an SQL query to add two new columns, designation and net_salary, to the table Companies. The designation column should have a data type of varchar(50), and the net_salary column should have a data type of number.
+
+ 
+
+ 
+
 For example:
 
 Test	Result
-INSERT INTO item VALUES("ITM5","Charlie Gold",700,"COM4");
-UPDATE company SET com_id='COM5' WHERE com_id='COM4';
-SELECT * FROM item;
-item_id     item_desc     rate        icom_id
-----------  ------------  ----------  ----------
-ITM5        Charlie Gold  700
+pragma table_info('Companies');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          int         0                       0
+1           name        varchar(50  0                       0
+2           address     text        0                       0
+3           email       varchar(50  0                       0
+4           phone       varchar(10  0                       0
+5           designatio  varchar(50  0                       0
+6           net_salary  number      0                       0
 ```
 
 **Output:**
 
-<img width="602" height="238" alt="image" src="https://github.com/user-attachments/assets/f4ce51a1-18af-400a-a79d-da3bd457ee15" />
+<img width="1108" height="182" alt="image" src="https://github.com/user-attachments/assets/8dba1f39-b913-447a-9cb5-a8f85862ee31" />
+
 
 
 **Question 10**
@@ -352,27 +359,31 @@ ITM5        Charlie Gold  700
 -- Paste Question 10 here
 
 ```sql
-Insert the following customers into the Customers table:
+In the Products table, insert a record where some fields are NULL, another record where all fields are filled without any NULL values, and a third record where some fields are filled, and others are left as NULL.
 
-CustomerID  Name         Address     City        ZipCode
-----------  -----------  ----------  ----------  ----------
-302         Laura Croft  456 Elm St  Seattle     98101
-303         Bruce Wayne  789 Oak St  Gotham      10001
+ProductID   Name              Category    Price       Stock
+----------  ---------------   ----------  ----------  ----------
+106         Fitness Tracker   Wearables
+107         Laptop            Electronics  999.99      50
+108         Wireless Earbuds  Accessories              100
+ 
+
 For example:
 
 Test	Result
-SELECT * FROM Customers;
-
-CustomerID  Name         Address     City        ZipCode
-----------  -----------  ----------  ----------  ----------
-302         Laura Croft  456 Elm St  Seattle     98101
-303         Bruce Wayne  789 Oak St  Gotham      10001
+SELECT * FROM Products;
+ProductID   Name             Category    Price       Stock
+----------  ---------------  ----------  ----------  ----------
+106         Fitness Tracker  Wearables
+107         Laptop           Electronic  999.99      50
+108         Wireless Earbud  Accessorie              100
 
 ```
 
 **Output:**
 
-<img width="1148" height="233" alt="image" src="https://github.com/user-attachments/assets/098d9a77-c0be-4160-a37d-b9b8fd4532c5" />
+<img width="860" height="145" alt="image" src="https://github.com/user-attachments/assets/72d715e0-7724-4511-8657-e051ec1ca384" />
+
 
 
 
